@@ -33,7 +33,7 @@ export function Card3D({
       meshRef.current.position.set(position[0], position[1], position[2])
       meshRef.current.scale.set(scale, scale, 1)
     }
-  }, [])
+  }, [position, scale])
 
   // Smoothly animate scale and position
   const [currentScale, setCurrentScale] = useState(scale)

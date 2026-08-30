@@ -15,9 +15,7 @@ export interface SemanticSpaceElementProps {
 }
 
 const BaseElement: typeof HTMLElement =
-  typeof HTMLElement !== 'undefined'
-    ? HTMLElement
-    : (class {} as unknown as typeof HTMLElement)
+  typeof HTMLElement !== 'undefined' ? HTMLElement : (class {} as unknown as typeof HTMLElement)
 
 /**
  * Base custom element wrapper for Semantic Space visualizations

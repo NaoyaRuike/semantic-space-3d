@@ -30,7 +30,7 @@
         "noStaticElementInteractions": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "error"
       },
       "suspicious": {
         "noExplicitAny": "off"
