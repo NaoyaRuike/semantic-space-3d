@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
+    "dev:playground": "pnpm --filter react-three-card-3d-playground dev",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
