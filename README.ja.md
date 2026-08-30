@@ -152,7 +152,39 @@ export function MySpace() {
 
 ---
 
-### 3. カードの完全カスタムレンダリング (`renderCard`)
+### 3. Web Components による利用 (`<semantic-space-3d>` / `<semantic-space-2d>`)
+
+React を使用せず、Vanilla JavaScript、HTML、Vue、Svelte、Angular などから直接 Web Components (Custom Elements) として利用することも可能です。
+
+```html
+<script type="module">
+  import 'semantic-space-3d/element'
+
+  const space = document.querySelector('semantic-space-3d')
+  space.data = [
+    { id: '1', title: 'ノード 1', imageUrl: 'https://example.com/1.jpg', position: [0, 0, 0] },
+    { id: '2', title: 'ノード 2', imageUrl: 'https://example.com/2.jpg', position: [5, 2, -3] }
+  ]
+
+  // ノードクリックイベントの購読
+  space.addEventListener('node-click', (event) => {
+    console.log('クリックされたノード:', event.detail)
+  })
+</script>
+
+<semantic-space-3d
+  x-axis-label="特徴量 X"
+  y-axis-label="特徴量 Y"
+  z-axis-label="特徴量 Z"
+  card-scale="1"
+  is-dark="true"
+  style="width: 100vw; height: 100vh; display: block;"
+></semantic-space-3d>
+```
+
+---
+
+### 4. カードの完全カスタムレンダリング (`renderCard` - React 限定)
 
 独自に構築した R3F メッシュやコンポーネントを使用したい場合は、`renderCard` 関数を渡します。
 

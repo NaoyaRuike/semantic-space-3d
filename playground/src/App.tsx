@@ -73,6 +73,22 @@ export default function App() {
         </div>
 
         <div style={{ display: 'flex', gap: '12px' }}>
+          <a
+            href="/wc.html"
+            style={{
+              padding: '8px 16px',
+              borderRadius: '6px',
+              border: `1px solid ${isDark ? '#374151' : '#d1d5db'}`,
+              background: isDark ? '#1f2937' : '#ffffff',
+              color: isDark ? '#60a5fa' : '#2563eb',
+              textDecoration: 'none',
+              fontWeight: 500,
+              display: 'inline-flex',
+              alignItems: 'center'
+            }}
+          >
+            Web Components Demo ↗
+          </a>
           <button
             onClick={() => setIs3D(!is3D)}
             style={{

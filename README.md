@@ -169,7 +169,39 @@ Change background colors, environment maps, coordinate axes, grids, and starfiel
 
 ---
 
-### 3. Custom Card Renderer (`renderCard`)
+### 3. Web Components (`<semantic-space-3d>` & `<semantic-space-2d>`)
+
+You can also use this library as standard **Web Components (Custom Elements)** in Vanilla JavaScript, HTML, Vue, Svelte, or Angular without writing React code:
+
+```html
+<script type="module">
+  import 'semantic-space-3d/element'
+
+  const space = document.querySelector('semantic-space-3d')
+  space.data = [
+    { id: '1', title: 'Node 1', imageUrl: 'https://example.com/1.jpg', position: [0, 0, 0] },
+    { id: '2', title: 'Node 2', imageUrl: 'https://example.com/2.jpg', position: [5, 2, -3] }
+  ]
+
+  // Listen to node click events
+  space.addEventListener('node-click', (event) => {
+    console.log('Clicked node:', event.detail)
+  })
+</script>
+
+<semantic-space-3d
+  x-axis-label="Feature X"
+  y-axis-label="Feature Y"
+  z-axis-label="Feature Z"
+  card-scale="1"
+  is-dark="true"
+  style="width: 100vw; height: 100vh; display: block;"
+></semantic-space-3d>
+```
+
+---
+
+### 4. Custom Card Renderer (`renderCard` - React only)
 
 Provide your own 3D component or mesh for complete rendering freedom:
 

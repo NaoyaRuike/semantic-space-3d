@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semantic Space Web Components Demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background-color: #0b0f19;
+        color: #f3f4f6;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        padding: 16px 24px;
+        background: #111827;
+        border-bottom: 1px solid #1e293b;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .controls {
+        display: flex;
+        gap: 12px;
+      }
+      button {
+        padding: 8px 16px;
+        border-radius: 6px;
+        border: 1px solid #374151;
+        background: #1f2937;
+        color: #f3f4f6;
+        cursor: pointer;
+        font-weight: 500;
+      }
+      #container {
+        flex: 1;
+        position: relative;
+      }
+      semantic-space-3d, semantic-space-2d {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      #info-panel {
+        display: none;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 280px;
+        background: rgba(17, 24, 39, 0.95);
+        border: 1px solid #374151;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        z-index: 10;
+        backdrop-filter: blur(8px);
+      }
+      #info-panel img {
+        width: 100%;
+        border-radius: 6px;
+        margin-bottom: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1 style="margin:0; font-size: 1.25rem;">Semantic Space Web Components Demo</h1>
+        <p style="margin:4px 0 0; font-size: 0.85rem; color: #9ca3af;">
+          Using <code>&lt;semantic-space-3d&gt;</code> & <code>&lt;semantic-space-2d&gt;</code> with Vanilla JS
+        </p>
+      </div>
+      <div class="controls">
+        <button id="toggle-view">Switch to 2D</button>
+        <button id="toggle-theme">Toggle Light/Dark</button>
+      </div>
+    </header>
+
+    <div id="container">
+      <semantic-space-3d
+        id="space-view"
+        x-axis-label="Complexity"
+        y-axis-label="Drama"
+        z-axis-label="Popularity"
+        card-scale="1"
+        is-dark="true"
+      ></semantic-space-3d>
+
+      <div id="info-panel">
+        <h3 style="margin: 0 0 10px;">Selected Node</h3>
+        <img id="info-img" src="" alt="" />
+        <div id="info-title" style="font-size: 1.1rem; font-weight: 600;"></div>
+        <div id="info-meta" style="margin-top: 8px; font-size: 0.85rem; color: #9ca3af;"></div>
+        <button id="close-info" style="margin-top: 16px; width: 100%; background: #3b82f6; border: none;">Close</button>
+      </div>
+    </div>
+
+    <script type="module">
+      import 'semantic-space-3d/element'
+
+      const sampleNodes = [
+        { id: '1', title: 'Interstellar', imageUrl: 'https://picsum.photos/id/10/300/450', position: [-2, 1, 3] },
+        { id: '2', title: 'Inception', imageUrl: 'https://picsum.photos/id/20/300/450', position: [3, -2, -1] },
+        { id: '3', title: 'The Dark Knight', imageUrl: 'https://picsum.photos/id/30/300/450', position: [0, 4, -3] },
+        { id: '4', title: 'Memento', imageUrl: 'https://picsum.photos/id/40/300/450', position: [-4, -3, 2] },
+        { id: '5', title: 'Dunkirk', imageUrl: 'https://picsum.photos/id/50/300/450', position: [2, 2, 4] }
+      ]
+
+      let is3D = true
+      let isDark = true
+      const container = document.getElementById('container')
+      const infoPanel = document.getElementById('info-panel')
+
+      function setupSpaceElement(el) {
+        el.data = sampleNodes
+        el.isDark = isDark
+        el.addEventListener('node-click', (e) => {
+          const node = e.detail
+          document.getElementById('info-img').src = node.imageUrl
+          document.getElementById('info-title').textContent = node.title
+          document.getElementById('info-meta').innerHTML = `ID: ${node.id}<br/>Position: [${node.position.map(n => n.toFixed(1)).join(', ')}]`
+          infoPanel.style.display = 'block'
+        })
+      }
+
+      let currentElement = document.getElementById('space-view')
+      setupSpaceElement(currentElement)
+
+      document.getElementById('toggle-view').addEventListener('click', () => {
+        is3D = !is3D
+        document.getElementById('toggle-view').textContent = is3D ? 'Switch to 2D' : 'Switch to 3D'
+        
+        currentElement.remove()
+        currentElement = document.createElement(is3D ? 'semantic-space-3d' : 'semantic-space-2d')
+        if (is3D) {
+          currentElement.setAttribute('x-axis-label', 'Complexity')
+          currentElement.setAttribute('y-axis-label', 'Drama')
+          currentElement.setAttribute('z-axis-label', 'Popularity')
+        }
+        setupSpaceElement(currentElement)
+        container.prepend(currentElement)
+      })
+
+      document.getElementById('toggle-theme').addEventListener('click', () => {
+        isDark = !isDark
+        currentElement.isDark = isDark
+        document.body.style.backgroundColor = isDark ? '#0b0f19' : '#f9fafb'
+        document.body.style.color = isDark ? '#f3f4f6' : '#111827'
+      })
+
+      document.getElementById('close-info').addEventListener('click', () => {
+        infoPanel.style.display = 'none'
+      })
+    </script>
+  </body>
+</html>
