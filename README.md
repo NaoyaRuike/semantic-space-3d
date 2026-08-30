@@ -1,34 +1,53 @@
 # semantic-space-3d
 
-インタラクティブな3D空間で多次元データを可視化・探索するための React Three Fiber (R3F) コンポーネントライブラリです。
+<div align="center">
 
-## 特徴
+[![npm version](https://img.shields.io/npm/v/semantic-space-3d.svg?style=flat-square)](https://www.npmjs.com/package/semantic-space-3d)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
+[![CI](https://github.com/NaoyaRuike/semantic-space-3d/actions/workflows/ci.yml/badge.svg)](https://github.com/NaoyaRuike/semantic-space-3d/actions/workflows/ci.yml)
 
-- **2D / 3D シーン対応**: 俯瞰表示用の `VisualizationScene`（Orthographic）と、3次元空間探索用の `VisualizationScene3D`（Perspective）を提供。
-- **柔軟なスタイリング**: カード本体（色・サイズ・発光エフェクト）やシーン全体（背景色・ライト・グリッド・軸・星空）のデザインをPropsで自由にカスタマイズ可能。
-- **フルカスタムレンダラー**: 必要に応じて `renderCard` を利用し、独自の3Dコンポーネントへ完全差し替えが可能。
-- **追加オブジェクトの挿入**: `children` を通じて独自の3DメッシュやカスタムライトをCanvas内に直接配置可能。
+**Interactive 3D space visualization library for multidimensional and semantic data using React Three Fiber (R3F).**
+
+[English](README.md) | [日本語 (Japanese)](README.ja.md)
+
+</div>
 
 ---
 
-## インストール
+## Features
+
+- 🌌 **2D & 3D Space Support**: Provides `VisualizationScene` (Orthographic) for top-down 2D views and `VisualizationScene3D` (Perspective) for immersive 3D exploration.
+- 🎨 **Deeply Customizable**: Freely configure card dimensions, colors, hover glow effects, scene themes, lighting, background grid, coordinate axes, and starry skies.
+- 🛠️ **Custom Renderers**: Completely replace cards with custom React Three Fiber 3D meshes using `renderCard`.
+- 🧩 **Extensible Canvas**: Inject custom lights, 3D models, UI overlays, or effects directly via `children`.
+- ⚡ **Optimized Performance**: Built on top of Three.js and `@react-three/fiber` for smooth rendering.
+
+---
+
+## Installation
 
 ```bash
+# Using pnpm
 pnpm add semantic-space-3d @react-three/fiber @react-three/drei three
-# または
+
+# Using npm
 npm install semantic-space-3d @react-three/fiber @react-three/drei three
+
+# Using yarn
+yarn add semantic-space-3d @react-three/fiber @react-three/drei three
 ```
 
 ---
 
-## 基本的な使い方
+## Quick Start
 
-### 1. 3D可視化シーン (`VisualizationScene3D`)
+### 3D Visualization Scene (`VisualizationScene3D`)
 
 ```tsx
+import React from 'react'
 import { VisualizationScene3D } from 'semantic-space-3d'
 
-interface MyData {
+interface DataItem {
   id: string
   title: string
   imageUrl: string
@@ -37,12 +56,12 @@ interface MyData {
   z: number
 }
 
-const data: MyData[] = [
+const data: DataItem[] = [
   { id: '1', title: 'Node 1', imageUrl: 'https://example.com/1.jpg', x: 0, y: 0, z: 0 },
   { id: '2', title: 'Node 2', imageUrl: 'https://example.com/2.jpg', x: 5, y: 3, z: -2 },
 ]
 
-export function MySpace() {
+export function SemanticSpaceApp() {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <VisualizationScene3D
@@ -53,11 +72,11 @@ export function MySpace() {
           title: item.title,
           imageUrl: item.imageUrl,
         })}
-        xAxisLabel="ジャンル"
-        yAxisLabel="人気度"
-        zAxisLabel="年代"
+        xAxisLabel="Category"
+        yAxisLabel="Popularity"
+        zAxisLabel="Timeline"
         cardScale={1}
-        onNodeClick={(item) => console.log('Clicked:', item)}
+        onNodeClick={(item) => console.log('Selected item:', item)}
       />
     </div>
   )
@@ -66,11 +85,11 @@ export function MySpace() {
 
 ---
 
-## デザインのカスタマイズ方法
+## Customization
 
-### 1. カードデザインのカスタマイズ (`cardStyle`)
+### 1. Card Styling (`cardStyle`)
 
-`cardStyle` プロパティを渡すことで、カードの寸法、カラー、ホバーエフェクト等を設定できます。
+Customize dimensions, colors, hover effects, and typography for card items:
 
 ```tsx
 <VisualizationScene3D
@@ -82,33 +101,33 @@ export function MySpace() {
   zAxisLabel="Z"
   cardScale={1}
   cardStyle={{
-    // 寸法設定
-    width: 1.8,                  // カードの幅 (デフォルト: 1.5)
-    height: 2.4,                 // カードの高さ (デフォルト: 2.1)
-    hoverScaleMultiplier: 1.4,   // ホバー時の拡大倍率 (デフォルト: 1.5)
+    // Dimensions
+    width: 1.8,                  // Card width (default: 1.5)
+    height: 2.4,                 // Card height (default: 2.1)
+    hoverScaleMultiplier: 1.4,   // Hover scale magnification (default: 1.5)
 
-    // カラー設定
-    bgColor: '#1e293b',          // カード背景色
-    bgHoverColor: '#334155',     // ホバー時背景色
-    textColor: '#f8fafc',        // タイトルの文字色
-    borderColor: '#475569',      // 枠線色
-    borderHoverColor: '#38bdf8', // ホバー時枠線色
+    // Colors
+    bgColor: '#1e293b',          // Card background color
+    bgHoverColor: '#334155',     // Card hover background color
+    textColor: '#f8fafc',        // Title text color
+    borderColor: '#475569',      // Border stroke color
+    borderHoverColor: '#38bdf8', // Border stroke color on hover
 
-    // 発光・テキスト設定
-    glowColor: '#0ea5e9',        // ホバー時の発光色
-    glowOpacity: 0.3,            // 発光の強さ (0.0〜1.0)
-    showGlow: true,              // グロー効果の有無
-    showTitle: true,             // タイトルの表示有無
-    fontSize: 0.1,               // タイトル文字サイズ
+    // Glow effect & typography
+    glowColor: '#0ea5e9',        // Hover glow color
+    glowOpacity: 0.3,            // Glow opacity (0.0 - 1.0)
+    showGlow: true,              // Enable/disable glow effect
+    showTitle: true,             // Enable/disable title overlay
+    fontSize: 0.1,               // Font size
   }}
 />
 ```
 
 ---
 
-### 2. 空間・軸・背景デザインのカスタマイズ (`theme`)
+### 2. Scene Environment & Theme (`theme`)
 
-`theme` プロパティを渡すことで、背景色、環境光、グリッド、軸ラベル、星空などのシーン設定を変更できます。
+Change background colors, environment maps, coordinate axes, grids, and starfields:
 
 ```tsx
 <VisualizationScene3D
@@ -120,13 +139,13 @@ export function MySpace() {
   zAxisLabel="Z"
   cardScale={1}
   theme={{
-    // 背景・環境
-    backgroundColor: '#090d16',   // 空間の背景色
-    environmentPreset: 'sunset',  // 環境光プリセット ('night' | 'city' | 'sunset' など)
-    ambientLightIntensity: 0.4,   // 環境光の強さ
-    pointLightIntensity: 1.0,     // ポイントライトの強さ
+    // Environment & background
+    backgroundColor: '#090d16',   // Scene canvas background color
+    environmentPreset: 'sunset',  // Drei environment preset ('night' | 'city' | 'sunset' etc.)
+    ambientLightIntensity: 0.4,   // Ambient light intensity
+    pointLightIntensity: 1.0,     // Point light intensity
 
-    // 星空エフェクト
+    // Starfield effect
     showStars: true,
     starsConfig: {
       count: 3000,
@@ -134,25 +153,25 @@ export function MySpace() {
       speed: 0.5,
     },
 
-    // 軸とラベル
+    // Coordinate axes & labels
     showAxes: true,
     axisLength: 15,
-    axisColor: '#93c5fd',         // 軸ラベルの文字色
+    axisColor: '#93c5fd',         // Axis labels font color
 
-    // グリッド
+    // Ground & wall grids
     showGrid: true,
-    gridSize: 30,                 // グリッドの大きさ
-    gridColorCenter: '#334155',   // グリッド中心線の色
-    gridColorGrid: '#1e293b',     // グリッド線の色
+    gridSize: 30,                 // Grid dimension
+    gridColorCenter: '#334155',   // Grid center line color
+    gridColorGrid: '#1e293b',     // Grid line color
   }}
 />
 ```
 
 ---
 
-### 3. カードの完全カスタムレンダリング (`renderCard`)
+### 3. Custom Card Renderer (`renderCard`)
 
-独自に構築した R3F メッシュやコンポーネントを使用したい場合は、`renderCard` 関数を渡します。
+Provide your own 3D component or mesh for complete rendering freedom:
 
 ```tsx
 <VisualizationScene3D
@@ -181,50 +200,58 @@ export function MySpace() {
 
 ---
 
-## API リファレンス
+## API Reference
 
 ### `Card3DStyle`
 
-| プロパティ | 型 | デフォルト | 説明 |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `width` | `number` | `1.5` | カードメッシュの幅 |
-| `height` | `number` | `2.1` | カードメッシュの高さ |
-| `hoverScaleMultiplier` | `number` | `1.5` | ホバー時の拡大倍率 |
-| `bgColor` | `string` | テーマ依存 | カード背景色 |
-| `bgHoverColor` | `string` | テーマ依存 | ホバー時のカード背景色 |
-| `textColor` | `string` | テーマ依存 | タイトルテキストの色 |
-| `borderColor` | `string` | テーマ依存 | 枠線の色 |
-| `borderHoverColor` | `string` | `'#3b82f6'` | ホバー時の枠線色 |
-| `glowColor` | `string` | `'#3b82f6'` | ホバー時のグロー（発光）色 |
-| `glowOpacity` | `number` | `0.2` | グローの不透明度 |
-| `fontSize` | `number` | `0.08` | タイトルのフォントサイズ |
-| `showTitle` | `boolean` | `true` | タイトルオーバーレイの表示有無 |
-| `showGlow` | `boolean` | `true` | ホバー時のグローエフェクトの有無 |
-| `titleBgColor` | `string` | `'#333333'` | タイトル背面の帯色 |
-| `titleBgOpacity` | `number` | `0.5` | タイトル背面の帯の不透明度 |
+| `width` | `number` | `1.5` | Card mesh width |
+| `height` | `number` | `2.1` | Card mesh height |
+| `hoverScaleMultiplier` | `number` | `1.5` | Magnification factor on hover |
+| `bgColor` | `string` | Theme-dependent | Card background color |
+| `bgHoverColor` | `string` | Theme-dependent | Card background color on hover |
+| `textColor` | `string` | Theme-dependent | Title text color |
+| `borderColor` | `string` | Theme-dependent | Border stroke color |
+| `borderHoverColor` | `string` | `'#3b82f6'` | Border stroke color on hover |
+| `glowColor` | `string` | `'#3b82f6'` | Hover glow color |
+| `glowOpacity` | `number` | `0.2` | Glow opacity (0.0 to 1.0) |
+| `fontSize` | `number` | `0.08` | Title font size |
+| `showTitle` | `boolean` | `true` | Whether to display title overlay |
+| `showGlow` | `boolean` | `true` | Whether to enable glow effect on hover |
+| `titleBgColor` | `string` | `'#333333'` | Background color for title strip |
+| `titleBgOpacity` | `number` | `0.5` | Opacity for title strip |
 
 ### `SceneTheme`
 
-| プロパティ | 型 | デフォルト | 説明 |
+| Property | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `backgroundColor` | `string` | `undefined` | シーンの背景色（CSSカラー） |
-| `environmentPreset` | `string` | `isDark ? 'night' : 'city'` | 環境光プリセット |
-| `ambientLightIntensity` | `number` | `0.2`〜`0.5` | アンビエントライトの強度 |
-| `pointLightIntensity` | `number` | `0.8`〜`1.2` | ポイントライトの強度 |
-| `spotLightIntensity` | `number` | `1.0` | スポットライトの強度（3Dのみ） |
-| `showStars` | `boolean` | `isDark` | 星空エフェクトの表示有無（3Dのみ） |
-| `starsConfig` | `object` | - | 星空の詳細設定（`count`, `factor`, `speed` 等） |
-| `showAxes` | `boolean` | `true` | 座標軸とラベルの表示有無（3Dのみ） |
-| `axisLength` | `number` | `12` | 軸の長さ（3Dのみ） |
-| `axisColor` | `string` | テーマ依存 | 軸ラベル文字色（3Dのみ） |
-| `showGrid` | `boolean` | `true` | グリッドの表示有無 |
-| `gridSize` | `number` | `20` (2D) / `24` (3D) | グリッドの大きさ |
-| `gridDivisions` | `number` | `20` (2D) / `12` (3D) | グリッドの分割数 |
-| `gridColorCenter` | `string \| number` | テーマ依存 | グリッドの中心線色 |
-| `gridColorGrid` | `string \| number` | テーマ依存 | グリッドの線の色 |
+| `backgroundColor` | `string` | `undefined` | Canvas background CSS color |
+| `environmentPreset` | `string` | `isDark ? 'night' : 'city'` | Environment preset name |
+| `ambientLightIntensity` | `number` | `0.2` - `0.5` | Ambient light intensity |
+| `pointLightIntensity` | `number` | `0.8` - `1.2` | Point light intensity |
+| `spotLightIntensity` | `number` | `1.0` | Spotlight intensity (3D only) |
+| `showStars` | `boolean` | `isDark` | Show starry background (3D only) |
+| `starsConfig` | `object` | - | Customization options for stars |
+| `showAxes` | `boolean` | `true` | Show axes lines and labels (3D only) |
+| `axisLength` | `number` | `12` | Coordinate axis length (3D only) |
+| `axisColor` | `string` | Theme-dependent | Color of axis labels (3D only) |
+| `showGrid` | `boolean` | `true` | Show spatial grid |
+| `gridSize` | `number` | `20` (2D) / `24` (3D) | Size of spatial grid |
+| `gridDivisions` | `number` | `20` (2D) / `12` (3D) | Number of subdivisions for grid |
+| `gridColorCenter` | `string \| number` | Theme-dependent | Color of grid center axes |
+| `gridColorGrid` | `string \| number` | Theme-dependent | Color of grid lines |
 
 ---
 
-## ライセンス
+## Contributing
 
-MIT
+Contributions, issues and feature requests are welcome! Feel free to check the [issues page](https://github.com/NaoyaRuike/semantic-space-3d/issues). See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and guidelines.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2026 [Naoya Ruike](https://github.com/NaoyaRuike).

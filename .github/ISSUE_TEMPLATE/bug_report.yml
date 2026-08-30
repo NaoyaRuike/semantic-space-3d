@@ -1,0 +1,53 @@
+name: 'Bug Report'
+description: 'File a bug report to help us improve semantic-space-3d'
+title: '[Bug]: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: What version of semantic-space-3d are you using?
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Steps to reproduce the behavior or a link to a minimal reproduction (e.g. StackBlitz, CodeSandbox).
+      placeholder: |
+        1. In this environment...
+        2. With these props...
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Info
+      description: Browser, OS, React version, Three.js version, etc.
+      value: |
+        - OS: 
+        - Browser: 
+        - React version: 
+        - @react-three/fiber version: 
+        - Three.js version: 

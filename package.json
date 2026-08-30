@@ -1,7 +1,7 @@
 {
   "name": "semantic-space-3d",
   "version": "1.0.0",
-  "description": "Explore multidimensional data in interactive 3D space.",
+  "description": "Explore and visualize multidimensional data in interactive 3D space with React Three Fiber.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -19,18 +19,32 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "dev:playground": "pnpm --filter react-three-card-3d-playground dev",
-    "prepublishOnly": "npm run build"
+    "build:playground": "pnpm --filter react-three-card-3d-playground build",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
   },
   "keywords": [
     "react",
     "react-three-fiber",
+    "r3f",
     "threejs",
     "3d",
+    "visualization",
+    "semantic-space",
     "card",
-    "visualization"
+    "embeddings",
+    "interactive-graph"
   ],
-  "author": "",
+  "author": "Naoya Ruike",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NaoyaRuike/semantic-space-3d.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NaoyaRuike/semantic-space-3d/issues"
+  },
+  "homepage": "https://github.com/NaoyaRuike/semantic-space-3d#readme",
   "peerDependencies": {
     "@react-three/drei": ">=10.0.0",
     "@react-three/fiber": ">=9.0.0",
