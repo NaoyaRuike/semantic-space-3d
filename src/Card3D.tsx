@@ -86,11 +86,9 @@ export function Card3D({
       ref={meshRef}
       onPointerOver={(e) => {
         e.stopPropagation()
-        setHovered(true)
         onHover(true)
       }}
       onPointerOut={() => {
-        setHovered(false)
         onHover(false)
       }}
       onClick={(e) => {
