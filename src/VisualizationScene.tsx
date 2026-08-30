@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { Environment, OrbitControls, OrthographicCamera } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, OrthographicCamera, Environment } from '@react-three/drei'
+import React, { useState } from 'react'
 import { Card3D } from './Card3D'
-import { CardData, Card3DStyle, SceneTheme, CardRenderProps } from './types'
+import type { Card3DStyle, CardData, CardRenderProps, SceneTheme } from './types'
 
 export interface VisualizationSceneProps<T> {
   data: T[]
@@ -92,11 +92,7 @@ export function VisualizationScene<T>({
         }
 
         if (renderCard) {
-          return (
-            <React.Fragment key={cardData.id || index}>
-              {renderCard(cardProps)}
-            </React.Fragment>
-          )
+          return <React.Fragment key={cardData.id || index}>{renderCard(cardProps)}</React.Fragment>
         }
 
         return (

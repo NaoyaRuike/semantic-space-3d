@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build & Type Check
+    name: Build, Lint & Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,6 +31,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Lint check
+        run: pnpm lint
+
+      - name: Run Tests
+        run: pnpm test:run
 
       - name: Type check (Root & Library)
         run: pnpm typecheck

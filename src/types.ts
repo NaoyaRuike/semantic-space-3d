@@ -45,7 +45,17 @@ export interface SceneTheme {
   /** Scene background color (e.g. '#0b0f19' or 'transparent') */
   backgroundColor?: string
   /** Environment preset from @react-three/drei (default: 'night' | 'city') */
-  environmentPreset?: 'night' | 'city' | 'sunset' | 'dawn' | 'forest' | 'studio' | 'apartment' | 'park' | 'lobby' | 'warehouse'
+  environmentPreset?:
+    | 'night'
+    | 'city'
+    | 'sunset'
+    | 'dawn'
+    | 'forest'
+    | 'studio'
+    | 'apartment'
+    | 'park'
+    | 'lobby'
+    | 'warehouse'
   /** Ambient light intensity */
   ambientLightIntensity?: number
   /** Point light intensity */

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import { Environment, OrbitControls, PerspectiveCamera, Stars, Text } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, PerspectiveCamera, Environment, Stars, Text } from '@react-three/drei'
+import React, { useState } from 'react'
 import { Card3D } from './Card3D'
-import { CardData, Card3DStyle, SceneTheme, CardRenderProps } from './types'
+import type { Card3DStyle, CardData, CardRenderProps, SceneTheme } from './types'
 
 export interface VisualizationScene3DProps<T> {
   data: T[]
@@ -75,7 +75,13 @@ export function VisualizationScene3D<T>({
 
       <ambientLight intensity={ambientIntensity} />
       <pointLight position={[15, 15, 15]} intensity={pointIntensity} />
-      <spotLight position={[-10, 20, 10]} angle={0.15} penumbra={1} intensity={spotIntensity} castShadow />
+      <spotLight
+        position={[-10, 20, 10]}
+        angle={0.15}
+        penumbra={1}
+        intensity={spotIntensity}
+        castShadow
+      />
 
       <Environment preset={envPreset} />
 
@@ -95,7 +101,12 @@ export function VisualizationScene3D<T>({
       {showAxes && (
         <>
           <axesHelper args={[axisLength]} />
-          <Text position={[axisLength + 1, 0, 0]} fontSize={0.8} color={labelColor} anchorX="center">
+          <Text
+            position={[axisLength + 1, 0, 0]}
+            fontSize={0.8}
+            color={labelColor}
+            anchorX="center"
+          >
             X: {xAxisLabel}
           </Text>
           <Text
@@ -154,9 +165,7 @@ export function VisualizationScene3D<T>({
 
           if (renderCard) {
             return (
-              <React.Fragment key={cardData.id || index}>
-                {renderCard(cardProps)}
-              </React.Fragment>
+              <React.Fragment key={cardData.id || index}>{renderCard(cardProps)}</React.Fragment>
             )
           }
 

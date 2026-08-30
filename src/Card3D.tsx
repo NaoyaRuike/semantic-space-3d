@@ -1,8 +1,8 @@
-import { useRef, useState, useEffect } from 'react'
+import { Billboard, Image as DreiImage, Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Billboard, Text, Image as DreiImage } from '@react-three/drei'
+import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { CardData, Card3DStyle } from './types'
+import type { Card3DStyle, CardData } from './types'
 
 export interface Card3DProps {
   node: CardData
@@ -26,7 +26,6 @@ export function Card3D({
   style,
 }: Card3DProps) {
   const meshRef = useRef<THREE.Group>(null)
-  const [hovered, setHovered] = useState(false)
 
   // Set initial position and scale on mount to prevent fly-in
   useEffect(() => {
@@ -41,7 +40,7 @@ export function Card3D({
 
   const hoverMultiplier = style?.hoverScaleMultiplier ?? 1.5
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (!meshRef.current) return
 
     const lerpSpeed = 10 * delta
