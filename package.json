@@ -1,6 +1,6 @@
 {
   "name": "semantic-space-3d",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Explore and visualize multidimensional data in interactive 3D space with React Three Fiber.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
